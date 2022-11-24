@@ -13,7 +13,7 @@ firstWorksheet = newWorkbook["data"]
 # Passing the column index to the worksheet and traversing through the each row of the column
 i = 0
 datei = open(r'C:\Users\matti\PycharmProjects\csvIntoJson\sendData.txt', 'a')
-
+datei.write("\r\n")
 for column_data in firstWorksheet['D']:
    # Printing the column values of every row
    test = firstWorksheet['B']
@@ -26,3 +26,4 @@ for column_data in firstWorksheet['D']:
    datei.write(str(test))
    datei.write("}}\" localhost:8080/api/v1/wuwitVXr9BqqDLxjHmlc/telemetry --header \"Content-Type:application/json\"\r\n")
    i = i + 1
+datei.close()
