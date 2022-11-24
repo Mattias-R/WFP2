@@ -27,3 +27,4 @@ for column_data in firstWorksheet['D']:
    datei.write("}}\" localhost:8080/api/v1/wuwitVXr9BqqDLxjHmlc/telemetry --header \"Content-Type:application/json\"\r\n")
    i = i + 1
 datei.close()
+#
