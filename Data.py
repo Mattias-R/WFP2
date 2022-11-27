@@ -6,6 +6,8 @@ inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\test.xlsx'
 
 # creating or loading an excel workbook
 newWorkbook = openpyxl.load_workbook(inputExcelFile)
+sheet_obj = newWorkbook.active
+print(sheet_obj.max_row)
 
 # Accessing specific sheet of the workbook.
 firstWorksheet = newWorkbook["test"]
@@ -20,6 +22,10 @@ datei.write("\r\n")
 token = ["test1", "test2", "test3", "test4","test5","test6","test7"]
 # Ascii -> A bis Z ist 65 bis 90. anfangen tun wir mit B, also 66
 table = 66
+#coutner mitzählen lassen, wie viel NA zwischen dem letzten NA und dem aktuellen wert waren.
+#danach eventuell soviele zurückspringen, die differenz durch die anzahl an NAs und das jeden tag dazu addieren und die daten damit auffüllen.
+#Mit backtrack alles durchgehen und zurückspringen?
+#Ist wasserbilanz der positive wert und die netnahme dann die dinge die subtrahiert werden?
 
 for device in token:
    for column_data in firstWorksheet['J']:
