@@ -23,7 +23,6 @@ x = 0
 token = ["test1", "test2", "test3", "test4","test5","test6","test7"]
 # Ascii -> A bis Z ist 65 bis 90. anfangen tun wir mit B, also 66
 table = 66
-bool = 0
 letzerWert = 0
 helper = 1
 helper2 = 0
@@ -34,36 +33,37 @@ for device in token:
    #diese Schleife ist dafür da, dass alle werte einer spalte bearbeitet werden.
 
    for i in range(maxLines):
+      if(i == 0):
+         i = i + 1
       tableName = firstWorksheet["" + chr(table)]
       tableName = tableName[i]
+      print(chr(table))
       #wenn NA dann x+1 damit man den sprung zurück weiß
 
       if(tableName.value == "NA"):
 
-         print("NA - erstes if")
+         #print("NA - erstes if")
          x = x+1
 
-         if(bool == 0):
-            print("muss leer bleiben")
-         else:
-               print("leer")
       else:
 
          if(x == 0):
-            print(tableName.value)
-            bool = 0
+            #print(tableName.value)
             #mit dem letzten wert werden die leeren felder berechnet
             letzerWert = tableName.value
             werte.append(tableName.value)
+            datei.write(str(tableName.value)+ "\r\n")
          else:
             innerLoop = x
             helper = x
             x = 0
+            help = letzerWert
             for k in range(innerLoop):
-               print(letzerWert)
-               print(tableName.value)
-               print(float(letzerWert)+(float(tableName.value)-float(letzerWert))/(helper+1))
-               letzerWert = float(letzerWert)+(float(tableName.value)-float(letzerWert))/(helper+1)
-            #boolean brauchen wir, damit wir wissen ob NA werte ausgetauscht werden müssen oder ob diese noch gezählt werden
-            bool = 1
+               #print(letzerWert)
+               #print(tableName.value)
+               #print(float(letzerWert)+(float(tableName.value)-float(letzerWert))/(helper+1))
+               letzerWert = float(letzerWert)+(float(tableName.value)-float(help))/(helper+1)
+               datei.write(str(letzerWert)+ "\r\n")
+            datei.write(str(tableName.value) + "\r\n")
+   table = table + 1
 
