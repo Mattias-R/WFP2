@@ -28,7 +28,7 @@ for device in token:
       test = firstWorksheet[""+chr(table)]
       test = test[i].value
       print("sudo curl -v -X POST --data \"{\"ts\":",column_data.value,",", end='')
-      print("\"values\":{\"value\":",test, "}}\" localhost:8080/api/v1/fxsKjElrtIRpx7r2qk35/telemetry --header \"Content-Type:application/json\"")
+      print("\"values\":{\"value\":",test, "}}\" localhost:8080/api/v1/",device, "/telemetry --header \"Content-Type:application/json\"")
       datei.write("sudo curl -v -X POST --data \"{\"ts\":")
       datei.write(str(column_data.value))
       datei.write(",\"values\":{\"value\":")
