@@ -31,7 +31,7 @@ werte = []
 #nach jeder iteration wird die nächste Excel spalte herangezogen
 for device in token:
    #diese Schleife ist dafür da, dass alle werte einer spalte bearbeitet werden.
-
+   #WENN DIE ZAHL ÜBER 1000 IST DANN MUSS SIE ALS NA GEWERTET WERDEN, WEIL MEHRERE DATUM SICH EINGESCHLICHEN HABEN
    for i in range(maxLines):
       if(i == 0):
          i = i + 1
