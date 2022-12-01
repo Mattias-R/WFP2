@@ -22,7 +22,7 @@ x = 0
 # Damit kann der token für jedes erstellte Gerät eingefügt und durchgearbetiet werden. Die meiste arbeit ist nur noch das Gerät zu erstellen
 token = ["test1", "test2", "test3", "test4","test5","test6","test7","test8","test9","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test8","test9","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7","test7"]
 # Ascii -> A bis Z ist 65 bis 90. anfangen tun wir mit B, also 66
-table = 66
+table = 67
 table2 = 64
 bol = 0
 bol2 = 0
@@ -44,6 +44,9 @@ for device in token:
       if(i == 0):
          i = i + 1
 
+      timestampp = firstWorksheet["A"]
+      timestampp = timestampp[i]
+
       if(bol == 1):
          tableName = firstWorksheet["" + chr(table2) + chr(table)]
          tableName = tableName[i]
@@ -60,6 +63,7 @@ for device in token:
       if(tableName.value == "NA"):
          #print("NA - erstes if")
          x = x+1
+         werte.append(timestampp.value)
 
       else:
 
@@ -67,8 +71,14 @@ for device in token:
             #print(tableName.value)
             #mit dem letzten wert werden die leeren felder berechnet
             letzerWert = tableName.value
-            werte.append(tableName.value)
-            datei.write(str(tableName.value)+ "\r\n")
+            #werte.append(tableName.value)
+            datei.write("sudo curl -v -X POST --data \"{\"ts\":")
+            datei.write(str(timestampp.value))
+            datei.write(",\"values\":{\"value\":")
+            datei.write(str(tableName.value))
+            datei.write("}}\" localhost:8080/api/v1/")
+            datei.write(device)
+            datei.write("/telemetry --header \"Content-Type:application/json\"\r\n")
          else:
             innerLoop = x
             helper = x
@@ -79,8 +89,22 @@ for device in token:
                #print(tableName.value)
                #print(float(letzerWert)+(float(tableName.value)-float(letzerWert))/(helper+1))
                letzerWert = float(letzerWert)+(float(tableName.value)-float(help))/(helper+1)
-               datei.write(str(letzerWert)+ "\r\n")
-            datei.write(str(tableName.value) + "\r\n")
+               datei.write("sudo curl -v -X POST --data \"{\"ts\":")
+               datei.write(str(werte[k]))
+               datei.write(",\"values\":{\"value\":")
+               round(letzerWert, 3)
+               datei.write(str(letzerWert))
+               datei.write("}}\" localhost:8080/api/v1/")
+               datei.write(device)
+               datei.write("/telemetry --header \"Content-Type:application/json\"\r\n")
+            datei.write("sudo curl -v -X POST --data \"{\"ts\":")
+            datei.write(str(timestampp.value))
+            datei.write(",\"values\":{\"value\":")
+            datei.write(str(tableName.value))
+            datei.write("}}\" localhost:8080/api/v1/")
+            datei.write(device)
+            datei.write("/telemetry --header \"Content-Type:application/json\"\r\n")
+         werte.clear()
    table = table + 1
 
 
