@@ -3,7 +3,6 @@ import openpyxl
 
 # input excel file path
 inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\verbrauchsdaten_Neuhaus.xlsx'
-
 # creating or loading an excel workbook
 newWorkbook = openpyxl.load_workbook(inputExcelFile)
 sheet_obj = newWorkbook.active
