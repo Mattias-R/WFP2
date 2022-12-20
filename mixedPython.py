@@ -2,9 +2,9 @@
 import openpyxl
 
 # input excel file path
-#inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\verbrauchsdaten_Neuhaus.xlsx'
+inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\verbrauchsdaten_Neuhaus.xlsx'
 #inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\verbrauchsdaten_schwabbeg.xlsx'
-inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\verbrauchsdaten_pudlach.xlsx'
+#inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\verbrauchsdaten_pudlach.xlsx'
 # creating or loading an excel workbook
 newWorkbook = openpyxl.load_workbook(inputExcelFile)
 sheet_obj = newWorkbook.active
@@ -13,9 +13,10 @@ firstWorksheet = newWorkbook["Tabelle1"]
 maxLines = sheet_obj.max_row
 # Passing the column index to the worksheet and traversing through the each row of the column
 excelrange = ["C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","F","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AF","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BF","BW","BX","BY"]
+excelrangeForPudlach = ["C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","F","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AF","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL"]
 test = ["C"]
 count = 0
-
+spaltenCount = 0
 
 for device in excelrange:
     tableName = firstWorksheet[device]
@@ -62,7 +63,7 @@ for device in excelrange:
         # if difference is greater than durchschnitt + abweichung * 2 for 3 days in a row, we concider it as an anomaly
         # why 3 days in a row? because otherwise a single increase would an error. this would raise the error counter to over 200
         # why *2? because we need some buffer to use more water. like when it is summer or something like that
-        if(difference > (durchschnitt + abweichung)*2 and value[len(value) - 2] > (durchschnitt + abweichung)*2 and value[len(value) - 3] > (durchschnitt + abweichung)*2):
+        if(difference > (durchschnitt + abweichung)*1.5 and value[len(value) - 2] > (durchschnitt + abweichung)*1.5 and value[len(value) - 3] > (durchschnitt + abweichung)*1.5):
             x = [i, round(durchschnitt + abweichung, 2), difference]
             printErrors.append(x)
             count = count + 1
@@ -70,7 +71,7 @@ for device in excelrange:
     if not printErrors:
         continue
     print("Spalte: " + str(device) + ", Errors: " + str(len(printErrors)) + ", List: " + str(printErrors))
-print("All errors: ", count)
+print("All errors: " + str(count) + " Haushälte mit Fehler: " + str(spaltenCount))
 
 # ---------------------- RULE CHAIN -----------------------
 # Daten bereingen. die if mit WM brauchen wir nicht, genauso wie die Fehlerwerte mit über 3000. aber alle NA müssen rausgefiltert werden..
@@ -80,3 +81,55 @@ print("All errors: ", count)
 
 # maschine learning?
 # lineare regression?
+
+
+from sklearn import linear_model
+import numpy as np
+import matplotlib.pyplot as plt
+import openpyxl
+Z = []
+#X=np.array([1,2,3,4,5,6,7,8,9,10 ]).reshape(-1, 1)
+#Y=[2,4,3,6,8,9,9,10,11,13]
+Y=[]
+lm = linear_model.LinearRegression()
+
+help = 0
+for i in range(maxLines):
+    tableName = firstWorksheet["L"]
+    helper = []
+    if (i == 0):
+        continue
+    # if value is unrealistic, make it NA
+    if (tableName[i].value != "NA" and float(tableName[i].value) > 3000):
+        tableName[i].value = "NA"
+    # skip loop if value is NA
+    if (tableName[i].value == "NA"):
+        continue
+    # skip loop if value is WM
+    if (str(tableName[i - 1].value).startswith("WM")):
+        continue
+    helper.append(float(tableName[i].value))
+    if (tableName[i - 1].value == "NA"):
+        difference = round(float(tableName[i].value) - float(helper[len(helper) - 2]), 2)
+        Y.append(difference)
+        #print(tableName[i].value)
+        help = help + 1
+        Z.append(i)
+        #print(help, difference)
+        continue
+    else:
+        difference = round(float(tableName[i].value) - float(tableName[i - 1].value), 2)
+        Y.append(difference)
+        #print(tableName[i].value)
+    help = help + 1
+    #print(help, difference)
+    Z.append(i)
+X=np.array(Z).reshape(-1, 1)
+lm.fit(X, Y)
+plt.scatter(X, Y, color = "r",marker = "o", s = 30)
+y_pred = lm.predict(X)
+plt.plot(X, y_pred, color = "k")
+plt.xlabel('x')
+plt.ylabel('y')
+plt.title("Simple Linear Regression")
+plt.show()

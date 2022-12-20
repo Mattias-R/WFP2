@@ -2,8 +2,9 @@
 import openpyxl
 
 # input excel file path
-inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\verbrauchsdaten_Neuhaus.xlsx'
+#inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\verbrauchsdaten_Neuhaus.xlsx'
 #inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\verbrauchsdaten_schwabbeg.xlsx'
+inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\verbrauchsdaten_pudlach.xlsx'
 # creating or loading an excel workbook
 newWorkbook = openpyxl.load_workbook(inputExcelFile)
 sheet_obj = newWorkbook.active
@@ -12,7 +13,7 @@ firstWorksheet = newWorkbook["Tabelle1"]
 maxLines = sheet_obj.max_row
 # Passing the column index to the worksheet and traversing through the each row of the column
 excelrange = ["C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","F","W","X","Y","Z","AA","AB","AC","AD","AE","AF","AG","AH","AI","AJ","AK","AL","AM","AN","AO","AP","AQ","AR","AS","AT","AU","AF","AW","AX","AY","AZ","BA","BB","BC","BD","BE","BF","BG","BH","BI","BJ","BK","BL","BM","BN","BO","BP","BQ","BR","BS","BT","BU","BF","BW","BX","BY"]
-test = ["C"]
+test = ["O"]
 count = 0
 
 for device in excelrange:

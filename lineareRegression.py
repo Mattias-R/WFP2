@@ -10,6 +10,7 @@ lm = linear_model.LinearRegression()
 
 inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\verbrauchsdaten_Neuhaus.xlsx'
 #inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\verbrauchsdaten_schwabbeg.xlsx'
+#inputExcelFile =r'C:\Users\matti\PycharmProjects\csvIntoJson\verbrauchsdaten_pudlach.xlsx'
 # creating or loading an excel workbook
 newWorkbook = openpyxl.load_workbook(inputExcelFile)
 sheet_obj = newWorkbook.active
@@ -17,7 +18,7 @@ sheet_obj = newWorkbook.active
 firstWorksheet = newWorkbook["Tabelle1"]
 maxLines = sheet_obj.max_row
 test = ["C"]
-tableName = firstWorksheet["D"]
+tableName = firstWorksheet["Y"]
 helper = []
 value = []
 help = 0
@@ -37,16 +38,18 @@ for i in range(maxLines):
     if (tableName[i - 1].value == "NA"):
         difference = round(float(tableName[i].value) - float(helper[len(helper) - 2]), 2)
         Y.append(difference)
-        print(tableName[i].value)
+        #print(tableName[i].value)
         help = help + 1
         Z.append(i)
+        print(help, difference)
         continue
     else:
         difference = round(float(tableName[i].value) - float(tableName[i - 1].value), 2)
         Y.append(difference)
-        print(tableName[i].value)
+        #print(tableName[i].value)
     help = help + 1
-    Z.append(help)
+    print(help, difference)
+    Z.append(i)
 X=np.array(Z).reshape(-1, 1)
 lm.fit(X, Y)
 plt.scatter(X, Y, color = "r",marker = "o", s = 30)
