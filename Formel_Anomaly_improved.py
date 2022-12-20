@@ -41,11 +41,11 @@ for device in excelrange:
         #if last value is NA than we have to use the last value from the helper array. therefore helper[len(helper)-2] because -1 would be the actual value which we added a second ago
         #if NA then continue, because the value would be too high. but we need the information for the caluclation.
         if(tableName[i-1].value == "NA"):
-            difference = round(float(tableName[i].value) - float(helper[len(helper)-2]) ,2)
+            difference = round(float(tableName[i].value) - float(helper[len(helper)-2]), 2)
             value.append(difference)
             continue
         else:
-            difference = round(float(tableName[i].value) - float(tableName[i-1].value) ,2)
+            difference = round(float(tableName[i].value) - float(tableName[i-1].value), 2)
             value.append(difference)
         # if value is 0, that means the customer is probably on holiday
         # if we do not pop it, the allowed difference would be too low and more false positive appear
@@ -56,7 +56,7 @@ for device in excelrange:
         for k in value:
             # calculates the abweichung based on the formula of https://welt-der-bwl.de/Mittlere-absolute-Abweichung#:~:text=Die%20mittlere%20absolute%20Abweichung%20vom%20Median%20ist%3A%20(%20%7C%201%2D,Standardabweichung.
             abweichung = abweichung + abs(k - durchschnitt)
-        abweichung = round(abweichung / float(len(value)),2)
+        abweichung = round(abweichung / float(len(value)), 2)
 
         # if difference is greater than durchschnitt + abweichung * 2 for 3 days in a row, we concider it as an anomaly
         # why 3 days in a row? because otherwise a single increase would an error. this would raise the error counter to over 200
