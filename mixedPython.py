@@ -70,6 +70,7 @@ for device in excelrange:
     # this if statement is only to print the relevant information (only columns with errors)
     if not printErrors:
         continue
+    spaltenCount = spaltenCount + 1
     print("Spalte: " + str(device) + ", Errors: " + str(len(printErrors)) + ", List: " + str(printErrors))
 print("All errors: " + str(count) + " Haushälte mit Fehler: " + str(spaltenCount))
 
@@ -95,7 +96,7 @@ lm = linear_model.LinearRegression()
 
 help = 0
 for i in range(maxLines):
-    tableName = firstWorksheet["L"]
+    tableName = firstWorksheet["BW"]
     helper = []
     if (i == 0):
         continue
