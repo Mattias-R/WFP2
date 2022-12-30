@@ -4,7 +4,7 @@ import json
 import time
 from datetime import datetime
 
-ACCESS_TOKEN = 'uNXA6TYPzqkw28EwbGl7'  # Token of your device
+ACCESS_TOKEN = 'c6TzfPdjXR9bQCOfvAjk'  # Token of your device
 broker = "77.237.53.201"  # host name
 port = 13883  # data listening port
 
@@ -22,8 +22,8 @@ client1.connect(broker, port)  # establish connection
 
 while True:
     payload = "{"
-    payload += "\"value\":60,";
-    payload += "\"Temperature\":25";
+    #payload += "\"value\":60,";
+    payload += "\"Temperature\":60";
     payload += "}"
     ret = client1.publish("v1/devices/me/telemetry", payload)  # topic-v1/devices/me/telemetry
     print("Please check LATEST TELEMETRY field of your device")

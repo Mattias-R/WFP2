@@ -15,11 +15,11 @@ print(sheet_obj.max_row)
 firstWorksheet = newWorkbook["Tabelle1"]
 maxLines = sheet_obj.max_row
 datei = open(r'C:\Users\matti\PycharmProjects\csvIntoJson\sendData.txt', 'a')
-tok = ["c6TzfPdjXR9bQCOfvAjk"]
+tok = ["eJ9fFvIdqCoM07HhWVGK"]
 tableName = firstWorksheet["C"]
 
 
-ACCESS_TOKEN = 'c6TzfPdjXR9bQCOfvAjk'  # Token of your device
+ACCESS_TOKEN = 'Ak32uCMrE8UxeH1kaBs0'  # Token of your device+
 broker = "77.237.53.201"  # host name
 port = 13883  # data listening port
 
@@ -66,3 +66,4 @@ for i in range(maxLines):
     print("Please check LATEST TELEMETRY field of your device")
     print(payload);
     time.sleep(1)
+#newMsg.delta = temperatureArray[temperatureArray.length -1].value
