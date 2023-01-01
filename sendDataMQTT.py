@@ -15,7 +15,7 @@ print(sheet_obj.max_row)
 firstWorksheet = newWorkbook["Tabelle1"]
 maxLines = sheet_obj.max_row
 datei = open(r'C:\Users\matti\PycharmProjects\csvIntoJson\sendData.txt', 'a')
-tok = ["eJ9fFvIdqCoM07HhWVGK"]
+tok = ["PJCLbFJ29K2M7DBiHhMx"]
 tableName = firstWorksheet["C"]
 
 
