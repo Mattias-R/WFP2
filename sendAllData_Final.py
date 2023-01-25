@@ -40,8 +40,11 @@ firstWorksheet = newWorkbook["Tabelle1"]
 maxLines = sheet_obj.max_row
 
 #Token for sending data
-token = ["BXtKENXJZPG8WAc7abPy", "6qmGQBPr1gCPLTNXAOQs", "P1ICt6BgFOF1wXEKeo1B"]
-
+te = ["fGYaRNnZYnGB4aMpLjgf", "EjsO9hLaEYP2GzdKGnZJ", "0dqIjcqaBDHxGmV5paak", "UNTOS1HuO2O1FqTFj70o"]
+te2 = ["DPB5XYM4Xuq072E1eerW", "FYzeg4LGnjj6ZkSw1nxU", "2DUwU6PkRclJ2i0hlkIU", "K3QHurhlGslw7oLgVQMA", "CBm3KWpGI3HSvAYMVjKk", "Ts7pt3LGxTj71n24L3Ey", "jgRWTq9CY9I41XmxUHGH", "AH0bNgc7giLz2M54iu7N", "B311ID2HRFd7sFJ8Evgo", "isKvxLTTU4mWMobJr8zO"]
+te3 = ["kDLjlTc0R3K2nuYBh95c", "cDfJwbrEzPpdW24myBHd", "hnlpHeoIWREl2MfH7Fvt", "NwgyHaCuB95G7Zep3RG5", "qRhCNogqQdKqOk5AMWZ5", "YmmBdm6lr1VZn5NAoczJ", "A2ZFgQ1q9d3yS6R5bjAW", "q3DeM07bQCoOU3nrS0km", "oQwwxw7YLwyGSHXwVc5n", "HPZj783P3vKYk9ThYulj", "LaVnFRaRyHnCQwNlfpdM"]
+te4 = [""]
+te5 = ["ZyZ4s7t1OPzzzDcres6J", "gO2b1MNfzwF6yQEUljjT", "UDicGMp6jubZ8nNZjizy", "IZalECgJL8Fa4pEX7JbY"]
 # Ascii -> A bis Z ist 65 bis 90. anfangen tun wir mit B, also 66
 table = 67
 table2 = 64
@@ -52,13 +55,13 @@ port = 13883  # data listening port
 timestampp = firstWorksheet["A"]
 
 for i in range(maxLines):
-    table = 67
-    table2 = 64
-    bol = 0
+    table = 75
+    table2 = 66
+    bol = 1
     if (i == 0):
         continue
 
-    for device in token:
+    for device in te3:
 
         if (table == 91):
             table = 65
@@ -78,7 +81,7 @@ for i in range(maxLines):
         if (tableName[i].value == "NA"):
             print("na")
         else:
-            tableName = firstWorksheet["" + chr(table)]
+            tableName = firstWorksheet["" + chr(table2) + chr(table)]
             ACCESS_TOKEN = device
             client1 = paho.Client("control1")  # create client object
             client1.on_publish = on_publish  # assign function to callback
@@ -93,7 +96,7 @@ for i in range(maxLines):
             MQTT_MSG = json.dumps(payload)
             ret = client1.publish("v1/devices/me/telemetry", MQTT_MSG)  # topic-v1/devices/me/telemetry
             #print("Please check LATEST TELEMETRY field of your device")
-            time.sleep(0.5)
+            time.sleep(0.75)
             client1.disconnect()
         table = table + 1
     print(i)
